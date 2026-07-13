@@ -6,7 +6,7 @@ const videoSources = {
   showreel: {
     poster: "",
     qualities: {
-      "Auto": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+      "Auto": "https://pub-66ab9d6fa4d24e1cbadbe0b3f79ffa0c.r2.dev/video_20260512_143930.mp4"
       // Future example:
       // "1080p": "https://your-r2-url/showreel/1080p/master.m3u8",
       // "720p": "https://your-r2-url/showreel/720p/master.m3u8"
