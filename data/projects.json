@@ -1,7 +1,25 @@
 {
-  "version": "1.0",
-
   "projects": [
-
+    {
+      "title": "Barbaad Song | Saiyaara | Ahaan Panday, Aneet Padda | The Rish | Jubin Nautiyal",
+      "slug": "barbaad-song-saiyaara",
+      "tags": [
+        "CGI Compositing",
+        "Keying",
+        "Beauty Work"
+      ],
+      "overview": "🎧 Song Credits:\nMusic: The Rish\nLyrics: The Rish (Rishabh Kant)\n⁠Singer: Jubin Nautiyal\nDirector of Choreography: Vijay A Ganguly\nMusic Production and Programming: DJ Phukan⁠\nMixed & Mastered By: Eric Pillai (Future Sound Of Bombay)\nRecording Studio: Trinity Sounds Studio\nMusic Supervisor: Yash Anand\nLive Sarangi: Dilshad Khan\nElectric Saaz: Arbaz Khan\nElectric Guitars: Ishan Das, Daanish Sharma, Arbaz Khan, The Rish\nAcoustic Guitars: Ishan Das, Arbaz Khan\nLive Synthesizers: The Rish, Asad Shabbir\nBacking Vocals (Female): Harjot Kaur\n\n🎬 Movie Credits:\nMovie: Saiyaara\nStarring: Ahaan Panday, Aneet Padda\nDirector: Mohit Suri\nProducer: Akshaye Widhani\nDirector of Photography: Vikas Sivaraman\nStory And Screenplay: Sankalp Sadanah\nDialogues: Rohan Shankar\nAssociate Producer: Rishabh Chopra\nCreative Executive Producer: Sumana Ghosh\nMusic: Mithoon, Sachet-Parampara, Rishabh Kant, Vishal Mishra, Tanishk Bagchi, Faheem Abdullah, Arslan Nizami\nLyrics: Irshad Kamil, Mithoon, Rishabh Kant, Raj Shekhar\nEditors: Devendra Murdeshwar, Rohit Makwana\nProduction Designers: Laxmi Keluskar, Rajat Poddar\nDirector of Choreography: Vijay A Ganguly\nCostume Designer: Sheetal Sharma\nSupervising Producer: Gurpreet Singh\nSound: Manas Choudhury, Ganesh Gangadharan\nBackground Music: John Stewart Eduri\nAction Director: Aejaz Gulab\nCasting Director: Shanoo Sharma\nVisual Effects Studio: yFX\nTrailers & Promos: Mohit Sajnaney\nRelease Date: 18 July 2025\n\n---------------------------------------------------------------------------\n\nTag",
+      "thumbnail": "https://pub-66ab9d6fa4d24e1cbadbe0b3f79ffa0c.r2.dev/video/barbaad/poster.jpg",
+      "status": "published",
+      "featured": false,
+      "video": {
+        "type": "hls",
+        "sources": {
+          "Auto": "https://pub-66ab9d6fa4d24e1cbadbe0b3f79ffa0c.r2.dev/video/barbaad/master.m3u8"
+        }
+      },
+      "id": "proj_1784480366787",
+      "date": "2026-07-19"
+    }
   ]
 }
