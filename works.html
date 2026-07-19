@@ -4,8 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Works | Neeraj VFX</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -15,7 +14,7 @@
     <a href="index.html" class="logo">NEERAJ <span>VFX</span></a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="works.html">Works</a></li>
+      <li><a href="works.html" class="active">Works</a></li>
       <li><a href="about.html">About</a></li>
     </ul>
     <div class="hamburger"><span></span><span></span><span></span></div>
@@ -23,33 +22,18 @@
 </nav>
 
 <section class="section" style="padding-top:140px;">
-  <div class="section-head">
-    <div class="tag">Portfolio</div>
-    <h2>Selected Works</h2>
+  <div class="section-header">
+    <div class="section-tag">PORTFOLIO</div>
+    <h2>Featured <span>Projects</span></h2>
+    <p>
+        Explore my latest VFX projects including CGI Integration,
+        Compositing, Matchmove and Rotoscopy work.
+    </p>
   </div>
 
-  <div class="works-grid">
-    <div class="work-card">
-      <div class="work-thumb"><div class="play-icon">▶</div></div>
-      <div class="work-info">
-        <div class="category">CGI Composite</div>
-        <h3>Coming Soon</h3>
-      </div>
-    </div>
-    <div class="work-card">
-      <div class="work-thumb"><div class="play-icon">▶</div></div>
-      <div class="work-info">
-        <div class="category">Rotoscopy</div>
-        <h3>Coming Soon</h3>
-      </div>
-    </div>
-    <div class="work-card">
-      <div class="work-thumb"><div class="play-icon">▶</div></div>
-      <div class="work-info">
-        <div class="category">Match Move</div>
-        <h3>Coming Soon</h3>
-      </div>
-    </div>
+  <!-- Dynamic cards will be injected strictly inside this container -->
+  <div class="container">
+    <div class="works-grid"></div>
   </div>
 </section>
 
@@ -57,6 +41,10 @@
   © 2026 Neeraj VFX. All rights reserved.
 </footer>
 
+<!-- Proper Script Loading Sequence according to locked workflow -->
+<script src="js/config.js"></script>
+<script src="js/dataManager.js"></script>
+<script src="js/worksManager.js"></script>
 <script src="js/script.js"></script>
 </body>
 </html>

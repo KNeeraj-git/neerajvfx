@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "1.0",
+
+  "project": {
+    "id": "",
+    "slug": "",
+
+    "title": "",
+    "category": "",
+    "tags": [],
+
+    "thumbnail": {
+      "url": "",
+      "alt": ""
+    },
+
+    "video": {
+      "sourceType": "",
+      "format": "",
+      "poster": "",
+
+      "sources": {
+      },
+
+      "defaultQuality": "Auto",
+
+      "subtitles": []
+    },
+
+    "overview": "",
+
+    "featured": false,
+
+    "published": true,
+
+    "publishDate": "",
+
+    "createdAt": "",
+
+    "updatedAt": "",
+
+    "seo": {
+      "title": "",
+      "description": "",
+      "keywords": []
+    }
+  }
+}

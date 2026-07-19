@@ -1,0 +1,91 @@
+<div class="page-header">
+    <h1>Add Project</h1>
+    <p>Create a new portfolio project.</p>
+</div>
+
+<form id="project-form" class="cms-form form-grid">
+    
+    <!-- LEFT COLUMN: Main Details -->
+    <div class="form-left">
+        <div class="form-group">
+            <label>Project Title</label>
+            <input type="text" id="project-title" placeholder="Example : GTA V Invisible VFX">
+        </div>
+
+        <div class="form-group">
+            <label>Project Slug</label>
+            <input type="text" id="project-slug" placeholder="Example : gta-v-invisible-vfx">
+        </div>
+
+        <!-- NEW TAGS SYSTEM -->
+        <div class="form-group">
+            <label>Tags (Select multiple)</label>
+            <div id="tags-container" class="tags-grid">
+                <!-- Tags JS se generate honge -->
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Project Overview</label>
+            <textarea id="project-overview" rows="6" placeholder="Write project overview..."></textarea>
+        </div>
+
+        <div class="form-row align-bottom">
+            <div class="form-group">
+                <label>Publish Status</label>
+                <select id="project-status">
+                    <option value="published">Published</option>
+                    <option value="draft">Draft</option>
+                </select>
+            </div>
+            <div class="form-group checkbox-group pb-fix">
+                <label>
+                    <input type="checkbox" id="project-featured">
+                    Featured Project
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Video Type</label>
+            <select id="video-type">
+                <option value="single-mp4">Single MP4</option>
+                <option value="multi-mp4">Multi Quality MP4</option>
+                <option value="hls">HLS (.m3u8)</option>
+                <option value="external">External Video</option>
+            </select>
+        </div>
+
+        <div id="video-fields"></div>
+        
+        <button type="button" id="save-project" class="publish-btn" style="margin-top: 10px;">Save Project</button>
+    </div>
+
+    <!-- RIGHT COLUMN: Thumbnail Upload UI -->
+    <div class="form-right">
+        <div class="form-group">
+            <label>Thumbnail Cover</label>
+            
+            <div class="thumb-preview-box">
+                <span class="thumb-placeholder-text" id="thumb-placeholder">No Image Preview</span>
+                <img id="thumb-preview-img" src="" alt="Thumbnail Preview">
+            </div>
+
+            <div class="thumb-tabs">
+                <button type="button" class="thumb-tab active" data-target="upload">Choose Image</button>
+                <button type="button" class="thumb-tab" data-target="url">Use URL</button>
+            </div>
+
+            <div id="thumb-panel-upload" class="thumb-panel active">
+                <input type="file" id="thumbnail-file" accept="image/*" class="file-input">
+                <small>Select an image from your device.</small>
+            </div>
+
+            <div id="thumb-panel-url" class="thumb-panel">
+                <input type="url" id="thumbnail-url" placeholder="https://...">
+                <small>Paste a direct image link (Google images, CDN, etc).</small>
+            </div>
+        </div>
+    </div>
+
+</form>

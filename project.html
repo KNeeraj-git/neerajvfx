@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Loading... | Neeraj VFX</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">NEERAJ <span>VFX</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="works.html" class="active">Works</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="hamburger"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<div class="yt-layout-container">
+    
+    <div class="yt-main-column">
+        
+        <div class="player-wrapper" id="project-player">
+          <video class="player-video" playsinline disablepictureinpicture controlslist="nodownload noremoteplayback noplaybackrate"></video>
+          <div class="player-overlay">
+            <div class="big-play-btn">▶</div>
+          </div>
+          <div class="player-loading"><div class="spinner"></div></div>
+          <div class="speed-indicator">1.5×</div>
+          <div class="player-controls">
+            
+            <div class="progress-bar-container">
+              <div class="progress-bar-buffered"></div>
+              <div class="progress-bar-filled"></div>
+            </div>
+            
+            <div class="controls-row">
+              <div class="controls-left">
+                <button class="ctrl-btn play-pause-btn">▶</button>
+                <span class="time-display">0:00 / 0:00</span>
+                <button class="ctrl-btn volume-btn">🔊</button>
+                <input type="range" class="volume-slider" min="0" max="1" step="0.05" value="1">
+              </div>
+              
+              <div class="controls-right">
+                <div class="direct-settings">
+                    <div class="direct-menu-wrapper">
+                        <button class="ctrl-box-btn speed-box-btn">1x</button>
+                        <div class="direct-menu speed-menu">
+                            <div class="settings-header"><span>Speed</span></div>
+                            <button class="settings-option" data-speed="0.5"><span>0.5x</span></button>
+                            <button class="settings-option" data-speed="0.75"><span>0.75x</span></button>
+                            <button class="settings-option active" data-speed="1"><span>1x</span></button>
+                            <button class="settings-option" data-speed="1.25"><span>1.25x</span></button>
+                            <button class="settings-option" data-speed="1.5"><span>1.5x</span></button>
+                            <button class="settings-option" data-speed="2"><span>2x</span></button>
+                        </div>
+                    </div>
+                    <div class="direct-menu-wrapper">
+                        <button class="ctrl-box-btn quality-box-btn">Auto</button>
+                        <div class="direct-menu quality-menu">
+                            <div class="settings-header"><span>Quality</span></div>
+                        </div>
+                    </div>
+                </div>
+                <button class="ctrl-btn fullscreen-btn">⛶</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="yt-video-details">
+            <h1 class="yt-video-title">Loading...</h1>
+            
+            <div class="description-box">
+                <p class="project-overview-text">Loading project details...</p>
+                <div class="project-tags-list" id="project-tags-list"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="yt-sidebar-column" id="related-videos-container"></div>
+    
+</div>
+
+<footer class="footer">
+  © 2026 Neeraj VFX. All rights reserved.
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/dataManager.js"></script>
+<script src="js/projectManager.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.17"></script>
+<script src="js/script.js"></script>
+</body>
+</html>

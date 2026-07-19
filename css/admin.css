@@ -1,0 +1,508 @@
+/* ==========================================
+   Neeraj VFX CMS
+   Admin Panel UI V2 (Premium Studio Grade)
+========================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #080808; /* Deep dark background */
+    color: #f5f5f5;
+    font-family: 'Inter', sans-serif;
+}
+
+/* ===========================
+   LAYOUT ARCHITECTURE
+=========================== */
+.admin-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    min-height: 100vh;
+}
+
+/* ===========================
+   SIDEBAR
+=========================== */
+.sidebar {
+    background: #111111;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 35px 20px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.sidebar h2 {
+    color: #e50914; /* Accent color */
+    margin-bottom: 40px;
+    font-size: 26px;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px;
+    padding-left: 10px;
+}
+
+.menu-btn {
+    width: 100%;
+    background: none;
+    border: none;
+    color: #9f9f9f;
+    text-align: left;
+    padding: 14px 20px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.25s ease;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.menu-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+}
+
+.menu-btn.active {
+    background: rgba(229, 9, 20, 0.1);
+    color: #e50914;
+    font-weight: 600;
+    border-left: 4px solid #e50914;
+}
+
+/* ===========================
+   MAIN CONTENT AREA
+=========================== */
+.main-content {
+    padding: 50px 60px;
+    max-width: 1400px;
+}
+
+.page-header {
+    margin-bottom: 40px;
+}
+
+.page-header h1 {
+    font-size: 36px;
+    margin-bottom: 8px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.page-header p {
+    color: #888;
+    font-size: 16px;
+}
+
+/* ===========================
+   DASHBOARD CARDS
+=========================== */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.card {
+    background: #141414;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 30px;
+    transition: 0.3s ease;
+}
+
+.card:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-4px);
+}
+
+.card h3 {
+    color: #9f9f9f;
+    margin-bottom: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.card h2, .card span {
+    font-size: 42px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.card p {
+    color: #aaa;
+    line-height: 1.8;
+}
+
+/* ===========================
+   BUTTONS
+=========================== */
+.publish-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 6px;
+    background: #e50914;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s ease;
+    letter-spacing: 0.5px;
+}
+
+.publish-btn:hover {
+    background: #ff1f2b;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(229, 9, 20, 0.25);
+}
+
+.publish-btn:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    background: #2a2a2a;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background: #3a3a3a;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* ===========================
+   FORMS & INPUTS
+=========================== */
+.cms-form {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ccc;
+    letter-spacing: 0.5px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="url"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 14px 16px;
+    background: #111;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 15px;
+    font-family: inherit;
+    transition: all 0.25s ease;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #555;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #e50914;
+    background: #161616;
+    box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.15);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 140px;
+    line-height: 1.6;
+}
+
+.form-group select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='%23999' viewBox='0 0 16 16'><path d='M8 11L3 6h10z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+    cursor: pointer;
+}
+
+/* ===========================
+   TAGS SYSTEM (NEW)
+=========================== */
+.tags-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tag-btn {
+    background: #141414;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #888;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.tag-btn:hover {
+    background: #1a1a1a;
+    color: #ccc;
+}
+
+.tag-btn.active {
+    background: rgba(229, 9, 20, 0.1);
+    color: #fff;
+    border-color: rgba(229, 9, 20, 0.4);
+    box-shadow: 0 0 10px rgba(229, 9, 20, 0.1);
+}
+
+/* ===========================
+   FORM LAYOUT (GRID)
+=========================== */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 50px;
+    align-items: start;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.form-row .form-group {
+    flex: 1;
+    min-width: 180px;
+}
+
+.align-bottom {
+    align-items: flex-end;
+}
+
+.pb-fix {
+    padding-bottom: 12px; 
+}
+
+/* Checkboxes */
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    margin-bottom: 0;
+    color: #eee;
+    font-weight: 500;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #e50914;
+}
+
+/* ===========================
+   THUMBNAIL UPLOAD UI
+=========================== */
+.thumb-preview-box {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #0a0a0a;
+    border: 2px dashed rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    overflow: hidden;
+    position: relative;
+    transition: 0.3s ease;
+}
+
+.thumb-preview-box:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.thumb-placeholder-text {
+    color: #666;
+    font-size: 14px;
+    font-weight: 500;
+    position: absolute;
+    z-index: 1;
+}
+
+#thumb-preview-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: relative;
+    z-index: 2;
+    display: none;
+}
+
+.thumb-tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.thumb-tab {
+    flex: 1;
+    padding: 12px;
+    background: #141414;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #888;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.25s ease;
+}
+
+.thumb-tab:hover {
+    background: #1a1a1a;
+    color: #ccc;
+}
+
+.thumb-tab.active {
+    background: rgba(229, 9, 20, 0.1);
+    color: #e50914;
+    border-color: rgba(229, 9, 20, 0.3);
+}
+
+.thumb-panel {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.thumb-panel.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.file-input {
+    width: 100%;
+    padding: 12px;
+    background: #111;
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+.file-input:hover { border-color: #e50914; }
+
+.thumb-panel small {
+    display: block;
+    margin-top: 10px;
+    color: #666;
+    font-size: 13px;
+}
+
+/* ===========================
+   ALL PROJECTS LIST
+=========================== */
+#project-search {
+    max-width: 400px;
+}
+
+.project-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding: 24px 30px;
+}
+
+.project-row h3 {
+    margin-bottom: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0;
+    color: #fff;
+    text-transform: none;
+}
+
+.project-row p {
+    color: #888;
+    font-size: 14px;
+    margin: 0;
+}
+
+.project-row .actions {
+    display: flex;
+    gap: 12px;
+}
+
+/* ===========================
+   RESPONSIVE (MOBILE/TABLET)
+=========================== */
+@media(max-width: 1100px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
+
+@media(max-width: 900px) {
+    .admin-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .sidebar {
+        height: auto;
+        position: static;
+        padding: 20px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .sidebar h2 { margin-bottom: 0; margin-right: 20px; padding-left: 0; }
+    
+    .menu-btn {
+        width: auto;
+        margin-bottom: 0;
+        padding: 10px 16px;
+    }
+
+    .main-content {
+        padding: 30px 20px;
+    }
+
+    .project-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+}

@@ -1,0 +1,17 @@
+<div class="page-header">
+    <h1>Import / Export</h1>
+    <p>Backup your data or restore from a previous backup.</p>
+</div>
+
+<div class="card" style="margin-top:30px;">
+    <h3>Export Data</h3>
+    <p>Download all your current projects as a JSON backup file. Isi file ko live website ke <code>data/projects.json</code> mein daal kar publish karo.</p>
+    <button id="export-btn" class="publish-btn">Export JSON</button>
+</div>
+
+<div class="card" style="margin-top:20px;">
+    <h3>Import Data</h3>
+    <p>Kisi purani exported JSON file se data restore karo. Yeh current data ko replace kar dega.</p>
+    <input type="file" id="import-file" accept=".json" style="display:block; margin-bottom:14px; color:#ccc;">
+    <button id="import-btn" class="publish-btn">Import JSON</button>
+</div>
