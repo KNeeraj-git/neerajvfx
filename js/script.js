@@ -14,8 +14,7 @@ const videoSources = {
 /* ============================================
    UI & NAVBAR LOGIC
 ============================================ */
-document.addEventListener("DOMContentLoaded", () => {
-    // Mobile Navbar Toggle
+document.addEventListener("DOMContentLoaded", async () => {
     const hamburger = document.querySelector(".hamburger");
     const navLinks = document.querySelector(".nav-links");
 
@@ -25,7 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Active Link Logic
     document.querySelectorAll(".nav-links a").forEach(link => {
         const linkPath = link.getAttribute("href");
         const currentPath = window.location.pathname.split("/").pop();
@@ -36,7 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
         link.addEventListener("click", () => navLinks.classList.remove("open"));
     });
 
-    // Scroll Reveal Animation
     const revealEls = document.querySelectorAll(".section, .work-card");
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -54,10 +51,59 @@ document.addEventListener("DOMContentLoaded", () => {
         observer.observe(el);
     });
 
-    // Initialize Home Page Player if it exists
+    /* --- HOME PAGE SHOWREEL DYNAMIC LOGIC --- */
     const playerEl = document.getElementById("showreel-player");
-    if (playerEl) {
-        Player.init(playerEl, videoSources.showreel);
+    if (playerEl && typeof dataManager !== "undefined") {
+        await dataManager.loadProjects();
+        const projects = dataManager.getProjects();
+        
+        // Priority 1: Checkbox "Set as Home Showreel"
+        let showreelProj = projects.find(p => p.isHomeShowreel && p.status === "published");
+        
+        // Priority 2: Agar Showreel checkbox nahi mila, toh "Featured" wale ko uthao
+        if (!showreelProj) {
+            showreelProj = projects.find(p => p.featured && p.status === "published");
+        }
+        
+        // Priority 3: Agar dono nahi mile, toh jo bhi latest published hai usko uthao
+        if (!showreelProj) {
+            showreelProj = projects.find(p => p.status === "published");
+        }
+
+        if (showreelProj && showreelProj.video && Object.keys(showreelProj.video.sources).length > 0) {
+            Player.init(playerEl, {
+                poster: showreelProj.thumbnail || "assets/thumbnails/comingsoon.webp",
+                type: showreelProj.video.type,
+                sources: showreelProj.video.sources
+            });
+        } else {
+            // Backup Fail-safe
+            Player.init(playerEl, videoSources.showreel);
+        }
+    }
+
+    /* --- VIEW MORE / VIEW LESS LOGIC --- */
+    const descBox = document.getElementById("description-box");
+    const viewMoreBtn = document.getElementById("view-more-btn");
+    const descFade = document.getElementById("description-fade");
+
+    if (descBox && viewMoreBtn) {
+        setTimeout(() => {
+            if (descBox.scrollHeight > 160) {
+                viewMoreBtn.style.display = "inline-block";
+            } else {
+                if (descFade) descFade.style.display = "none";
+            }
+        }, 500);
+
+        viewMoreBtn.addEventListener("click", () => {
+            descBox.classList.toggle("expanded");
+            if (descBox.classList.contains("expanded")) {
+                viewMoreBtn.textContent = "SHOW LESS";
+            } else {
+                viewMoreBtn.textContent = "VIEW MORE";
+            }
+        });
     }
 });
 
@@ -74,14 +120,12 @@ const Player = {
     },
 
     init: function(wrapper, config) {
-        // DOM Elements
         const video = wrapper.querySelector(".player-video");
         const overlay = wrapper.querySelector(".player-overlay");
         const controls = wrapper.querySelector(".player-controls");
         const loading = wrapper.querySelector(".player-loading");
         const speedIndicator = wrapper.querySelector(".speed-indicator");
         
-        // Progress & Controls
         const progressContainer = wrapper.querySelector(".progress-bar-container");
         const progressBuffered = wrapper.querySelector(".progress-bar-buffered");
         const progressFilled = wrapper.querySelector(".progress-bar-filled");
@@ -91,20 +135,63 @@ const Player = {
         const volumeSlider = wrapper.querySelector(".volume-slider");
         const fullscreenBtn = wrapper.querySelector(".fullscreen-btn");
 
-        // Premium Settings Menus
         const speedBoxBtn = wrapper.querySelector(".speed-box-btn");
         const speedMenu = wrapper.querySelector(".speed-menu");
         const qualityBoxBtn = wrapper.querySelector(".quality-box-btn");
         const qualityMenu = wrapper.querySelector(".quality-menu");
 
-        // Validation
+        if (speedMenu) {
+            speedMenu.innerHTML = `
+                <div class="settings-header"><span>Speed</span></div>
+                <button class="settings-option" data-speed="0.5"><span>0.5x</span></button>
+                <button class="settings-option active" data-speed="1"><span>1x</span></button>
+                <button class="settings-option" data-speed="1.5"><span>1.5x</span></button>
+            `;
+        }
+
+        let volIndicator = wrapper.querySelector(".volume-indicator");
+        if (!volIndicator) {
+            volIndicator = document.createElement("div");
+            volIndicator.className = "volume-indicator";
+            wrapper.appendChild(volIndicator);
+        }
+        let seekIndicator = wrapper.querySelector(".seek-indicator");
+        if (!seekIndicator) {
+            seekIndicator = document.createElement("div");
+            seekIndicator.className = "seek-indicator";
+            wrapper.appendChild(seekIndicator);
+        }
+
+        let warningToast = wrapper.querySelector(".fullscreen-warning-toast");
+        if (!warningToast) {
+            warningToast = document.createElement("div");
+            warningToast.className = "fullscreen-warning-toast";
+            warningToast.innerHTML = "⛶ Go Fullscreen for Settings";
+            wrapper.appendChild(warningToast);
+        }
+
+        let warningTimer;
+        function showWarning() {
+            warningToast.classList.add("show");
+            clearTimeout(warningTimer);
+            warningTimer = setTimeout(() => {
+                warningToast.classList.remove("show");
+            }, 2500);
+        }
+
+        function isSmallPortrait() {
+            const isPortrait = window.innerHeight > window.innerWidth;
+            const isMobileWidth = window.innerWidth <= 600;
+            const isFullscreen = document.fullscreenElement || wrapper.classList.contains("ios-fullscreen");
+            return isMobileWidth && isPortrait && !isFullscreen;
+        }
+
         if (!config || !config.sources || Object.keys(config.sources).length === 0) {
             console.error("❌ Player Error: No video sources provided.");
             if (loading) loading.style.display = "none";
             return;
         }
 
-        // Clean up previous instances
         const existingIframe = wrapper.querySelector(".external-iframe");
         if (existingIframe) existingIframe.remove();
         if (this.hlsInstance) {
@@ -112,12 +199,13 @@ const Player = {
             this.hlsInstance = null;
         }
 
-        // Base Setup
         video.style.display = "block";
         if (controls) controls.style.display = "block"; 
         if (overlay) overlay.style.display = "flex";
-        video.addEventListener("contextmenu", (e) => e.preventDefault());
+        video.oncontextmenu = (e) => e.preventDefault();
 
+        wrapper.setAttribute("tabindex", "0");
+        
         const sourceKeys = Object.keys(config.sources);
         let currentQuality = sourceKeys[0]; 
 
@@ -175,14 +263,12 @@ const Player = {
                 this.hlsInstance.loadSource(videoUrl);
                 this.hlsInstance.attachMedia(video);
 
-                // Event listener for SWITCHED only (Removed SWITCHING for instant UI feedback)
                 this.hlsInstance.on(Hls.Events.LEVEL_SWITCHED, (event, data) => {
                     const level = this.hlsInstance.levels[data.level];
                     if (level && qualityBoxBtn) {
                         const isAuto = this.hlsInstance.autoLevelEnabled;
-                        // Backup check: Sirf tab update karo jab auto mode ON ho, taaki user click override na ho
                         if (isAuto) {
-                            qualityBoxBtn.textContent = `Auto (${level.height}p)`;
+                            qualityBoxBtn.textContent = `AUTO (${level.height}p)`;
                         }
                     }
                 });
@@ -200,7 +286,7 @@ const Player = {
                             let displayTitle = height + "p";
 
                             if (height >= 720 && height < 1080) badgeStr = `<span class="q-badge">HD</span>`;
-                            else if (height >= 1080 && height < 1440) badgeStr = `<span class="q-badge">Full HD</span>`;
+                            else if (height >= 1080 && height < 1440) badgeStr = `<span class="q-badge">FULL HD</span>`;
                             else if (height >= 1440 && height < 2160) badgeStr = `<span class="q-badge">2K</span>`;
                             else if (height >= 2160) {
                                 badgeStr = `<span class="q-badge q-4k">4K</span>`;
@@ -208,7 +294,7 @@ const Player = {
                             }
                             
                             menuHTML += `<button class="settings-option" data-hls-level="${level.originalIndex}">
-                                            <span>${displayTitle} ${badgeStr}</span>
+                                            <span>${displayTitle}</span> ${badgeStr}
                                          </button>`;
                         });
                         qualityMenu.innerHTML = menuHTML;
@@ -224,7 +310,6 @@ const Player = {
         }
 
         if (config.poster) video.poster = config.poster;
-
 
         /* ==========================================
            2. DYNAMIC QUALITY MENU GENERATION
@@ -247,13 +332,13 @@ const Player = {
                 }
                 qualityMenu.innerHTML = menuHTML;
             } else {
-                sourceKeys.forEach((quality) => {
+                [...sourceKeys].reverse().forEach((quality) => {
                     const isActive = (quality === currentQuality) ? "active" : "";
                     let badgeStr = "";
                     let displayTitle = quality;
 
                     if (quality.includes("720")) badgeStr = `<span class="q-badge">HD</span>`;
-                    else if (quality.includes("1080")) badgeStr = `<span class="q-badge">Full HD</span>`;
+                    else if (quality.includes("1080")) badgeStr = `<span class="q-badge">FULL HD</span>`;
                     else if (quality.includes("1440")) badgeStr = `<span class="q-badge">2K</span>`;
                     else if (quality.includes("4K") || quality.includes("2160")) {
                         badgeStr = `<span class="q-badge q-4k">4K</span>`;
@@ -261,7 +346,7 @@ const Player = {
                     }
 
                     menuHTML += `<button class="settings-option ${isActive}" data-quality="${quality}">
-                                    <span>${displayTitle} ${badgeStr}</span>
+                                    <span>${displayTitle}</span> ${badgeStr}
                                  </button>`;
                 });
                 
@@ -301,8 +386,11 @@ const Player = {
             video.paused ? video.play() : video.pause();
         }
 
-        if (overlay) overlay.addEventListener("click", togglePlayback);
-        if (playPauseBtn) playPauseBtn.addEventListener("click", togglePlayback);
+        const bigPlayBtn = wrapper.querySelector(".big-play-btn");
+        
+        if (playPauseBtn) playPauseBtn.onclick = (e) => { e.stopPropagation(); togglePlayback(); };
+        if (bigPlayBtn) bigPlayBtn.onclick = (e) => { e.stopPropagation(); togglePlayback(); };
+        if (overlay) overlay.onclick = (e) => { if (e.target === overlay) togglePlayback(); };
 
         video.addEventListener("play", () => {
             if (overlay) {
@@ -348,13 +436,13 @@ const Player = {
         });
 
         if (progressContainer) {
-            progressContainer.addEventListener("click", (e) => {
+            progressContainer.onpointerdown = (e) => {
                 const rect = progressContainer.getBoundingClientRect();
                 const percent = (e.clientX - rect.left) / rect.width;
                 if (video.duration && isFinite(video.duration)) {
                     video.currentTime = percent * video.duration;
                 }
-            });
+            };
         }
 
         if (volumeSlider) {
@@ -366,56 +454,72 @@ const Player = {
         }
 
         if (volumeBtn) {
-            volumeBtn.addEventListener("click", () => {
+            volumeBtn.onclick = () => {
                 video.muted = !video.muted;
                 volumeBtn.innerHTML = video.muted ? "🔇" : "🔊";
                 if (volumeSlider) volumeSlider.value = video.muted ? 0 : video.volume;
-            });
+            };
         }
 
         /* ==========================================
-           4. SETTINGS MENUS (Speed & Quality)
+           4. SETTINGS MENUS (SCROLL & CLICK FIX)
         ========================================== */
-        function closeAllMenus() {
-            if (speedMenu) speedMenu.classList.remove("show");
-            if (qualityMenu) qualityMenu.classList.remove("show");
-        }
+        
+        document.removeEventListener("pointerdown", Player.closeAllMenus);
+        Player.closeAllMenus = function() {
+            const sMenus = document.querySelectorAll(".speed-menu");
+            const qMenus = document.querySelectorAll(".quality-menu");
+            sMenus.forEach(m => m.classList.remove("show"));
+            qMenus.forEach(m => m.classList.remove("show"));
+        };
+        // Close menus if touched outside
+        document.addEventListener("pointerdown", Player.closeAllMenus);
+
+        const handleMenuToggle = (e, menu) => {
+            e.preventDefault(); 
+            e.stopPropagation();
+            if (isSmallPortrait()) { 
+                Player.closeAllMenus(); 
+                showWarning(); 
+                return; 
+            }
+            const isOpen = menu.classList.contains("show");
+            Player.closeAllMenus();
+            if (!isOpen) menu.classList.add("show");
+        };
 
         if (speedBoxBtn && speedMenu) {
-            speedBoxBtn.addEventListener("click", (e) => {
-                e.stopPropagation();
-                const isOpen = speedMenu.classList.contains("show");
-                closeAllMenus();
-                if (!isOpen) speedMenu.classList.add("show");
-            });
+            speedBoxBtn.onpointerdown = (e) => handleMenuToggle(e, speedMenu);
+            speedBoxBtn.onclick = (e) => e.preventDefault(); 
+            // Allow scrolling inside menu without closing it
+            speedMenu.onpointerdown = (e) => e.stopPropagation();
         }
 
         if (qualityBoxBtn && qualityMenu) {
-            qualityBoxBtn.addEventListener("click", (e) => {
-                e.stopPropagation();
-                const isOpen = qualityMenu.classList.contains("show");
-                closeAllMenus();
-                if (!isOpen) qualityMenu.classList.add("show");
-            });
+            qualityBoxBtn.onpointerdown = (e) => handleMenuToggle(e, qualityMenu);
+            qualityBoxBtn.onclick = (e) => e.preventDefault(); 
+            // Allow scrolling inside menu without closing it
+            qualityMenu.onpointerdown = (e) => e.stopPropagation();
         }
 
-        document.addEventListener("click", closeAllMenus);
-        if (speedMenu) speedMenu.addEventListener("click", e => e.stopPropagation());
-
         wrapper.querySelectorAll("[data-speed]").forEach(btn => {
-            btn.addEventListener("click", () => {
+            btn.onpointerdown = null; // Remove old ghost click logic
+            btn.onclick = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
                 video.playbackRate = parseFloat(btn.dataset.speed);
                 wrapper.querySelectorAll("[data-speed]").forEach(item => item.classList.remove("active"));
                 btn.classList.add("active");
                 if (speedBoxBtn) {
                     speedBoxBtn.textContent = btn.dataset.speed + "x";
                 }
-                closeAllMenus();
-            });
+                Player.closeAllMenus();
+            };
         });
 
         if (qualityMenu) {
-            qualityMenu.addEventListener("click", (e) => {
+            qualityMenu.onpointerdown = (e) => e.stopPropagation(); 
+            qualityMenu.onclick = (e) => {
                 e.stopPropagation();
                 const btn = e.target.closest(".settings-option");
                 if (!btn || btn.disabled) return;
@@ -428,21 +532,20 @@ const Player = {
                 if (config.type === "hls" && Player.hlsInstance) {
                     if (isAuto) {
                         Player.hlsInstance.nextLevel = -1;
-                        if (qualityBoxBtn) qualityBoxBtn.textContent = "Auto"; // Instant UI Update
+                        if (qualityBoxBtn) qualityBoxBtn.textContent = "Auto";
                     } else {
                         Player.hlsInstance.nextLevel = parseInt(btn.dataset.hlsLevel);
-                        // Instant UI Update so user doesn't wait
                         let spanText = btn.querySelector("span").textContent.replace(/HD|Full HD|2K|4K/g, "").trim();
                         if (qualityBoxBtn) qualityBoxBtn.textContent = spanText;
                     }
-                    closeAllMenus();
+                    Player.closeAllMenus();
                     return;
                 }
 
                 if (config.type === "multi-mp4") {
                     let selectedQuality = btn.dataset.quality;
                     if (!selectedQuality || selectedQuality === currentQuality) {
-                        closeAllMenus();
+                        Player.closeAllMenus();
                         return; 
                     }
 
@@ -460,26 +563,34 @@ const Player = {
                         let qText = selectedQuality.includes("4K") || selectedQuality.includes("2160") ? "2160p" : selectedQuality;
                         qualityBoxBtn.textContent = qText;
                     }
-                    closeAllMenus();
+                    Player.closeAllMenus();
                 }
-            });
+            };
         }
 
         /* ==========================================
            5. ADVANCED CONTROLS
         ========================================== */
         if (fullscreenBtn) {
-            fullscreenBtn.addEventListener("click", async () => {
+            fullscreenBtn.onclick = async (e) => {
+                e.stopPropagation();
                 try {
-                    if (!document.fullscreenElement) {
-                        if (wrapper.requestFullscreen) await wrapper.requestFullscreen();
-                        else if (video.webkitEnterFullscreen) video.webkitEnterFullscreen();
-                        if (screen.orientation && screen.orientation.lock) screen.orientation.lock("landscape").catch(() => {});
-                    } else {
-                        await document.exitFullscreen();
+                    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+                    if (isIOS || !document.fullscreenEnabled) {
+                         wrapper.classList.toggle("ios-fullscreen");
+                         document.body.style.overflow = wrapper.classList.contains("ios-fullscreen") ? "hidden" : "";
+                         return;
                     }
-                } catch (err) { console.log(err); }
-            });
+                    if (!document.fullscreenElement) {
+                        if (wrapper.requestFullscreen) {
+                            await wrapper.requestFullscreen();
+                            if (screen.orientation && screen.orientation.lock) screen.orientation.lock("landscape").catch(() => {});
+                        }
+                    } else {
+                        if (document.exitFullscreen) await document.exitFullscreen();
+                    }
+                } catch (err) { console.log("Fullscreen Error:", err); }
+            };
         }
 
         function showControls() {
@@ -487,8 +598,12 @@ const Player = {
             clearTimeout(hideControlsTimer);
             if (!video.paused) {
                 hideControlsTimer = setTimeout(() => {
-                    wrapper.classList.remove("show-controls");
-                    closeAllMenus(); 
+                    const isMenuOpen = (speedMenu && speedMenu.classList.contains("show")) || 
+                                       (qualityMenu && qualityMenu.classList.contains("show"));
+                    
+                    if (!isMenuOpen) {
+                        wrapper.classList.remove("show-controls");
+                    }
                 }, 2500);
             }
         }
@@ -496,20 +611,58 @@ const Player = {
         wrapper.addEventListener("mousemove", showControls);
         wrapper.addEventListener("touchstart", showControls);
 
+        /* ---------- GESTURES: DOUBLE TAP TO SEEK & HOLD TO 1.5x ---------- */
+        let lastTapTime = 0; 
+        
         wrapper.addEventListener("pointerdown", (e) => {
-            if (!document.fullscreenElement) return;
-            const rect = wrapper.getBoundingClientRect();
-            if ((e.clientX - rect.left) < rect.width / 2) return;
+            if (e.target.closest('.player-controls') || e.target.closest('.big-play-btn')) return;
 
-            holdTimer = setTimeout(() => {
-                isHolding = true;
-                video.playbackRate = 1.5;
-                if(speedIndicator) {
-                    speedIndicator.textContent = "1.5× Speed";
-                    speedIndicator.style.display = "flex";
+            const rect = wrapper.getBoundingClientRect();
+            const xPos = e.clientX - rect.left;
+            const width = rect.width;
+            
+            let zone = "center";
+            if (xPos < width * 0.35) zone = "left";
+            else if (xPos > width * 0.65) zone = "right";
+
+            if (zone === "center") return;
+
+            const currentTime = new Date().getTime();
+            const tapLength = currentTime - lastTapTime;
+
+            if (tapLength < 300 && tapLength > 0) {
+                clearTimeout(holdTimer);
+                if (zone === "left") {
+                    video.currentTime = Math.max(video.currentTime - 5, 0);
+                    showSeekIndicator("⏪ 5s");
+                } else if (zone === "right") {
+                    video.currentTime = Math.min(video.currentTime + 5, video.duration);
+                    showSeekIndicator("5s ⏩");
                 }
-            }, 300);
+                e.preventDefault();
+            } else {
+                if (zone === "right") {
+                    holdTimer = setTimeout(() => {
+                        isHolding = true;
+                        video.playbackRate = 1.5;
+                        if(speedIndicator) {
+                            speedIndicator.textContent = "1.5× Speed";
+                            speedIndicator.style.display = "flex";
+                        }
+                    }, 300);
+                }
+            }
+            lastTapTime = currentTime;
         });
+
+        function showSeekIndicator(text) {
+            if (seekIndicator) {
+                seekIndicator.textContent = text;
+                seekIndicator.style.opacity = "1";
+                clearTimeout(seekIndicator.hideTimer);
+                seekIndicator.hideTimer = setTimeout(() => { seekIndicator.style.opacity = "0"; }, 600);
+            }
+        }
 
         function stopHold() {
             clearTimeout(holdTimer);
@@ -524,6 +677,57 @@ const Player = {
         wrapper.addEventListener("pointerup", stopHold);
         wrapper.addEventListener("pointerleave", stopHold);
         wrapper.addEventListener("pointercancel", stopHold);
+
+        /* ---------- GESTURES: SWIPE UP/DOWN FOR VOLUME ---------- */
+        let startX = 0;
+        let startY = 0;
+        let startVolume = 0;
+        let isSwipingVol = false;
+
+        wrapper.addEventListener("touchstart", (e) => {
+            if (e.target.closest('.player-controls') || e.target.closest('.big-play-btn')) return;
+
+            const rect = wrapper.getBoundingClientRect();
+            const isLeftQuarter = (e.touches[0].clientX - rect.left) < (rect.width / 4); 
+            
+            const isFullscreen = document.fullscreenElement || wrapper.classList.contains("ios-fullscreen");
+            const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+            
+            if (isLeftQuarter && isTouchDevice && isFullscreen) {
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+                startVolume = video.volume;
+                isSwipingVol = true;
+            }
+        }, {passive: true});
+
+        wrapper.addEventListener("touchmove", (e) => {
+            if (isSwipingVol && window.matchMedia("(pointer: coarse)").matches) {
+                const deltaX = Math.abs(e.touches[0].clientX - startX);
+                const deltaY = Math.abs(e.touches[0].clientY - startY);
+
+                if (deltaX > deltaY && deltaX > 10) {
+                    isSwipingVol = false;
+                    return;
+                }
+
+                const swipeDistanceY = startY - e.touches[0].clientY;
+                let newVolume = startVolume + (swipeDistanceY / 350); 
+                newVolume = Math.max(0, Math.min(1, newVolume));
+                
+                video.volume = newVolume;
+                video.muted = (newVolume === 0);
+
+                if (volIndicator) {
+                    volIndicator.textContent = "Volume: " + Math.round(newVolume * 100) + "%";
+                    volIndicator.style.opacity = "1";
+                    clearTimeout(volIndicator.hideTimer);
+                    volIndicator.hideTimer = setTimeout(() => { volIndicator.style.opacity = "0"; }, 1000);
+                }
+            }
+        }, {passive: true});
+
+        wrapper.addEventListener("touchend", () => { isSwipingVol = false; });
 
         document.addEventListener("keydown", (e) => {
             const tag = document.activeElement.tagName.toLowerCase();

@@ -25,6 +25,9 @@
     
     <div class="yt-main-column">
         
+        <!-- BACK TO PROJECTS BUTTON (HTML MEIN ADD KIYA HAI) -->
+        <a href="works.html" class="back-to-projects">← Back to Projects</a>
+
         <div class="player-wrapper" id="project-player">
           <video class="player-video" playsinline disablepictureinpicture controlslist="nodownload noremoteplayback noplaybackrate"></video>
           <div class="player-overlay">
@@ -77,10 +80,13 @@
         <div class="yt-video-details">
             <h1 class="yt-video-title">Loading...</h1>
             
-            <div class="description-box">
+            <!-- VIEW MORE/LESS STRUCTURE -->
+            <div class="description-box" id="description-box">
                 <p class="project-overview-text">Loading project details...</p>
                 <div class="project-tags-list" id="project-tags-list"></div>
+                <div class="description-fade" id="description-fade"></div>
             </div>
+            <button class="view-more-btn" id="view-more-btn" style="display: none;">View More</button>
         </div>
 
     </div>

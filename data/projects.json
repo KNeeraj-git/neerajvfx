@@ -19,7 +19,8 @@
         }
       },
       "id": "proj_1784480366787",
-      "date": "2026-07-19"
+      "date": "2026-07-19",
+      "isHomeShowreel": false
     },
     {
       "title": "INDIA’S GOT LATENT S2 EP3 ft. Raghu Ram, Vishal Dadlani, Tanmay Bhat, Yashraj",
@@ -39,7 +40,8 @@
         }
       },
       "id": "proj_1784524750084",
-      "date": "2026-07-20"
+      "date": "2026-07-20",
+      "isHomeShowreel": true
     },
     {
       "title": "saiyaara Multy Mp4",
@@ -61,7 +63,28 @@
         }
       },
       "id": "proj_1784524947664",
-      "date": "2026-07-20"
+      "date": "2026-07-20",
+      "isHomeShowreel": false
+    },
+    {
+      "title": "Train Teaser 3",
+      "slug": "train-teaser-3",
+      "tags": [
+        "Environment Extension"
+      ],
+      "overview": "",
+      "thumbnail": "https://pub-66ab9d6fa4d24e1cbadbe0b3f79ffa0c.r2.dev/video/Train%20-%20Official%20Teaser/Train%20Official%20Teaser%20Cover.jpg",
+      "status": "published",
+      "featured": false,
+      "video": {
+        "type": "hls",
+        "sources": {
+          "Auto": "https://pub-66ab9d6fa4d24e1cbadbe0b3f79ffa0c.r2.dev/video/Train%20-%20Official%20Teaser/master.m3u8"
+        }
+      },
+      "id": "proj_1784625883070",
+      "date": "2026-07-21",
+      "isHomeShowreel": false
     }
   ]
 }

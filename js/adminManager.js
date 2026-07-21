@@ -1,7 +1,7 @@
 /*
 ====================================
 Neeraj VFX CMS
-Admin Manager v6.0 (Tags System Integration)
+Admin Manager v7.1 (Home Showreel Icon Update)
 ====================================
 */
 
@@ -21,7 +21,7 @@ class AdminManager {
         this.isThumbValid = false;
         this.currentThumbUrl = "";
 
-        // NEW: Predefined VFX Industry Tags
+        // Predefined VFX Industry Tags
         this.availableTags = [
             "CGI Compositing", "Compositing", "Paint & Prep", "Rotoscoping", 
             "Matchmove", "Camera Tracking", "Object Tracking", "Keying", 
@@ -89,7 +89,7 @@ class AdminManager {
             this.currentThumbUrl = "";
 
             this.setupSlugAutoGenerate();
-            this.setupTagsSystem(); // NEW TAGS SYSTEM
+            this.setupTagsSystem(); 
             this.setupThumbnailUI();
             this.setupVideoFields();
             this.setupSaveProject();
@@ -142,7 +142,6 @@ class AdminManager {
             btn.textContent = tag;
             btn.dataset.tag = tag;
             
-            // Mark as active if editing an existing project with this tag
             if (selectedTags.includes(tag)) {
                 btn.classList.add("active");
             }
@@ -312,11 +311,12 @@ class AdminManager {
 
             const title = document.getElementById("project-title").value.trim();
             const slug = document.getElementById("project-slug").value.trim();
-            const tags = this.getSelectedTags(); // Using tags instead of category
+            const tags = this.getSelectedTags(); 
             const overview = document.getElementById("project-overview").value.trim();
             const videoType = document.getElementById("video-type").value;
             const statusEl = document.getElementById("project-status");
             const featuredEl = document.getElementById("project-featured");
+            const showreelEl = document.getElementById("project-showreel"); // Checkbox reference
 
             if (!title) { alert("Project Title is required."); return; }
             if (!slug) { alert("Project Slug is required."); return; }
@@ -356,12 +356,18 @@ class AdminManager {
                 }
             }
 
-            // Remove category, use tags array
+            // SMART LOGIC: Agar is project ko showreel banaya hai, to baaki sab se flag hata do
+            const isHomeShowreel = showreelEl ? showreelEl.checked : false;
+            if (isHomeShowreel) {
+                dataManager.projects.forEach(p => p.isHomeShowreel = false);
+            }
+
             const project = {
                 title, slug, tags, overview,
                 thumbnail: finalThumbnailUrl, 
                 status: statusEl ? statusEl.value : "draft",
                 featured: featuredEl ? featuredEl.checked : false,
+                isHomeShowreel: isHomeShowreel,
                 video: { type: videoType, sources: videoSources }
             };
 
@@ -388,18 +394,19 @@ class AdminManager {
         document.getElementById("project-slug").value = project.slug || "";
         document.getElementById("project-overview").value = project.overview || "";
 
-        // Prefill Tags
         if (project.tags && Array.isArray(project.tags)) {
             this.setupTagsSystem(project.tags);
         } else if (project.category) {
-            // Fallback for old projects saved with 'category'
             this.setupTagsSystem([project.category]);
         }
 
         const statusEl = document.getElementById("project-status");
         const featuredEl = document.getElementById("project-featured");
+        const showreelEl = document.getElementById("project-showreel");
+
         if (statusEl) statusEl.value = project.status || "draft";
         if (featuredEl) featuredEl.checked = !!project.featured;
+        if (showreelEl) showreelEl.checked = !!project.isHomeShowreel;
 
         this.slugManuallyEdited = true;
 
@@ -454,10 +461,14 @@ class AdminManager {
 
         container.innerHTML = projects.map(project => {
             const displayTags = (project.tags && project.tags.length > 0) ? project.tags.join(', ') : (project.category || "—");
+            
+            // UI FIX: Render Home Icon if project is set as showreel
+            const showreelBadge = project.isHomeShowreel ? `<span style="font-size: 1.1em; margin-left: 6px;" title="Set as Home Showreel">🏠</span>` : "";
+            
             return `
             <div class="card project-row">
                 <div>
-                    <h3>${project.title || "(Untitled)"} ${project.featured ? "⭐" : ""}</h3>
+                    <h3>${project.title || "(Untitled)"} ${project.featured ? "⭐" : ""} ${showreelBadge}</h3>
                     <p style="color:#e50914; font-weight:500; font-size:13px; margin-bottom:4px;">${displayTags}</p>
                     <p><span style="color: ${project.status === 'published' ? '#4caf50' : '#ff9800'}">${project.status || "draft"}</span> · ${project.date || "—"}</p>
                 </div>
@@ -517,11 +528,10 @@ class AdminManager {
         if (typeof dataManager === "undefined") return;
         const projects = dataManager.getProjects();
         
-        // Count unique tags used across all projects
         let allTags = [];
         projects.forEach(p => {
             if (p.tags) allTags = allTags.concat(p.tags);
-            else if (p.category) allTags.push(p.category); // Fallback for old data
+            else if (p.category) allTags.push(p.category); 
         });
         const uniqueTags = [...new Set(allTags)];
 
@@ -533,7 +543,6 @@ class AdminManager {
         });
 
         const pCount = document.getElementById("dashboard-total-projects");
-        // Update text to match tags logic
         const cCountHeading = document.querySelector("#dashboard-total-categories")?.previousElementSibling;
         if(cCountHeading) cCountHeading.textContent = "Tags Used";
         
