@@ -1,7 +1,7 @@
 /*
 ===========================================
 Neeraj VFX CMS
-Project Page Manager v6.2 (Redundant Tag Removed)
+Project Page Manager v6.2 (Cleaned for Cloudflare Function)
 ===========================================
 */
 
@@ -38,6 +38,7 @@ class ProjectManager {
     }
 
     renderProject() {
+        // Basic fallback for browser tab title
         document.title = `${this.project.title} | Neeraj VFX`;
 
         const titleEl = document.querySelector(".yt-video-title");
@@ -46,14 +47,11 @@ class ProjectManager {
             titleEl.innerHTML = `${this.project.title} ${badge}`;
         }
 
-        // RED TAG REMOVED: tagEl.textContent logic removed from here
-
         const overviewEl = document.querySelector(".project-overview-text");
         if (overviewEl) {
             overviewEl.innerHTML = (this.project.overview || "").replace(/\n/g, '<br>');
         }
 
-        // TAGS CHIPS (Below Description)
         const tagsContainer = document.getElementById("project-tags-list");
         if (tagsContainer) {
             if (this.project.tags && this.project.tags.length > 0) {

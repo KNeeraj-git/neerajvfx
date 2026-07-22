@@ -3,7 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Project Loading... | Neeraj VFX</title>
+
+<!-- BASE SEO TAGS (Cloudflare isko dynamically change karega) -->
+<title>Project Breakdown | Neeraj VFX</title>
+<meta name="title" content="Project Breakdown | Neeraj VFX">
+<meta name="description" content="Watch the cinematic visual effects and compositing breakdown by Neeraj Kumar.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://neerajvfx.com/project.html">
+
+<!-- Open Graph Fallback -->
+<meta property="og:type" content="video.other">
+<meta property="og:url" content="https://neerajvfx.com/project.html">
+<meta property="og:title" content="Project Breakdown | Neeraj VFX">
+<meta property="og:description" content="Watch the cinematic visual effects and compositing breakdown by Neeraj Kumar.">
+<meta property="og:image" content="https://neerajvfx.com/assets/logos/social_preview.webp">
+
+<!-- Twitter Fallback -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:title" content="Project Breakdown | Neeraj VFX">
+<meta property="twitter:description" content="Watch the cinematic visual effects and compositing breakdown by Neeraj Kumar.">
+<meta property="twitter:image" content="https://neerajvfx.com/assets/logos/social_preview.webp">
+
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -22,10 +42,7 @@
 </nav>
 
 <div class="yt-layout-container">
-    
     <div class="yt-main-column">
-        
-        <!-- BACK TO PROJECTS BUTTON (HTML MEIN ADD KIYA HAI) -->
         <a href="works.html" class="back-to-projects">← Back to Projects</a>
 
         <div class="player-wrapper" id="project-player">
@@ -36,12 +53,10 @@
           <div class="player-loading"><div class="spinner"></div></div>
           <div class="speed-indicator">1.5×</div>
           <div class="player-controls">
-            
             <div class="progress-bar-container">
               <div class="progress-bar-buffered"></div>
               <div class="progress-bar-filled"></div>
             </div>
-            
             <div class="controls-row">
               <div class="controls-left">
                 <button class="ctrl-btn play-pause-btn">▶</button>
@@ -49,7 +64,6 @@
                 <button class="ctrl-btn volume-btn">🔊</button>
                 <input type="range" class="volume-slider" min="0" max="1" step="0.05" value="1">
               </div>
-              
               <div class="controls-right">
                 <div class="direct-settings">
                     <div class="direct-menu-wrapper">
@@ -79,8 +93,6 @@
 
         <div class="yt-video-details">
             <h1 class="yt-video-title">Loading...</h1>
-            
-            <!-- VIEW MORE/LESS STRUCTURE -->
             <div class="description-box" id="description-box">
                 <p class="project-overview-text">Loading project details...</p>
                 <div class="project-tags-list" id="project-tags-list"></div>
@@ -88,11 +100,8 @@
             </div>
             <button class="view-more-btn" id="view-more-btn" style="display: none;">View More</button>
         </div>
-
     </div>
-
     <div class="yt-sidebar-column" id="related-videos-container"></div>
-    
 </div>
 
 <footer class="footer">
