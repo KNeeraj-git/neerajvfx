@@ -1,69 +1,54 @@
 {
   "projects": [
     {
-      "title": "Barbaad Song | Saiyaara | Ahaan Panday, Aneet Padda | The Rish | Jubin Nautiyal",
-      "slug": "barbaad-song-saiyaara",
+      "title": "VFX Showreel 2025",
+      "slug": "vfx-showreel-2025",
       "tags": [
-        "CGI Compositing",
+        "Compositing",
+        "Paint & Prep",
+        "Rotoscoping",
+        "Matchmove",
+        "Camera Tracking",
         "Keying",
+        "Projection",
         "Beauty Work"
       ],
-      "overview": "🎧 Song Credits:\nMusic: The Rish\nLyrics: The Rish (Rishabh Kant)\n⁠Singer: Jubin Nautiyal\nDirector of Choreography: Vijay A Ganguly\nMusic Production and Programming: DJ Phukan⁠\nMixed & Mastered By: Eric Pillai (Future Sound Of Bombay)\nRecording Studio: Trinity Sounds Studio\nMusic Supervisor: Yash Anand\nLive Sarangi: Dilshad Khan\nElectric Saaz: Arbaz Khan\nElectric Guitars: Ishan Das, Daanish Sharma, Arbaz Khan, The Rish\nAcoustic Guitars: Ishan Das, Arbaz Khan\nLive Synthesizers: The Rish, Asad Shabbir\nBacking Vocals (Female): Harjot Kaur\n\n🎬 Movie Credits:\nMovie: Saiyaara\nStarring: Ahaan Panday, Aneet Padda\nDirector: Mohit Suri\nProducer: Akshaye Widhani\nDirector of Photography: Vikas Sivaraman\nStory And Screenplay: Sankalp Sadanah\nDialogues: Rohan Shankar\nAssociate Producer: Rishabh Chopra\nCreative Executive Producer: Sumana Ghosh\nMusic: Mithoon, Sachet-Parampara, Rishabh Kant, Vishal Mishra, Tanishk Bagchi, Faheem Abdullah, Arslan Nizami\nLyrics: Irshad Kamil, Mithoon, Rishabh Kant, Raj Shekhar\nEditors: Devendra Murdeshwar, Rohit Makwana\nProduction Designers: Laxmi Keluskar, Rajat Poddar\nDirector of Choreography: Vijay A Ganguly\nCostume Designer: Sheetal Sharma\nSupervising Producer: Gurpreet Singh\nSound: Manas Choudhury, Ganesh Gangadharan\nBackground Music: John Stewart Eduri\nAction Director: Aejaz Gulab\nCasting Director: Shanoo Sharma\nVisual Effects Studio: yFX\nTrailers & Promos: Mohit Sajnaney\nRelease Date: 18 July 2025\n\n---------------------------------------------------------------------------\n\nTag",
-      "thumbnail": "https://pub-66ab9d6fa4d24e1cbadbe0b3f79ffa0c.r2.dev/video/barbaad/poster.jpg",
+      "overview": "A curated collection of visual effects work showcasing skills across Compositing, Rotoscoping, Matchmoving, Cleanup, Paint, and Prep. This showreel demonstrates attention to detail, technical accuracy, seamless integration, and cinematic visual quality through a variety of production-style shots.",
+      "thumbnail": "https://pub-66ab9d6fa4d24e1cbadbe0b3f79ffa0c.r2.dev/Home%20Showreel/VFX_Showreel_2025.webp",
       "status": "published",
       "featured": false,
+      "isHomeShowreel": true,
       "video": {
         "type": "hls",
         "sources": {
-          "Auto": "https://pub-66ab9d6fa4d24e1cbadbe0b3f79ffa0c.r2.dev/video/barbaad/master.m3u8"
+          "Auto": "https://pub-66ab9d6fa4d24e1cbadbe0b3f79ffa0c.r2.dev/Home%20Showreel/master.m3u8"
         }
       },
-      "id": "proj_1784480366787",
-      "date": "2026-07-19",
-      "isHomeShowreel": false
+      "id": "proj_1784791258445",
+      "date": "2026-07-23"
     },
     {
-      "title": "saiyaara Multy Mp4",
-      "slug": "saiyaara-multy-mp4",
+      "title": "Multi-Pass Compositing Practice",
+      "slug": "multi-pass-compositing-practice",
       "tags": [
-        "CGI Compositing"
+        "CGI Compositing",
+        "Look Development",
+        "FX Integration",
+        "3D Integration"
       ],
-      "overview": "🎧 Song Credits:\nMusic: Tanishk Bagchi, Faheem Abdullah, Arslan Nizami\nLyrics: Irshad Kamil\n⁠Singer: Shreya Ghoshal\nAlaap Vocals: Arslan Nizami\nDirector of Choreography: Vijay A Ganguly\nMusic Production: Tanishk Bagchi, Ganesh Waghela\nAdditional Production: Krishna Kishor⁠\nMixed & Mastered by: Eric Pillai (Future Sound Of Bombay)\nLive Rhythm: KV Prasad, Krishna Kishor, Ganesh Rao, Sairam\nGuitars: Godfrey Immanual",
-      "thumbnail": "https://deadline.com/wp-content/uploads/2025/07/Saiyaara_Movies_Gallery_04-e1753796843282.jpg",
+      "overview": "This project is a personal compositing practice created in Foundry Nuke using publicly shared multi-pass render elements provided by VFX Vibe for learning purposes. The complete compositing workflow—including look development, integration, color grading, lighting adjustments, and final shot assembly—was created independently by me.",
+      "thumbnail": "https://pub-66ab9d6fa4d24e1cbadbe0b3f79ffa0c.r2.dev/video/CGI%20Multi-pass%20By%20%20VFX%20VIBE/Multi-Pass%20Compositing%20Practice.webp",
       "status": "published",
       "featured": false,
+      "isHomeShowreel": false,
       "video": {
-        "type": "multi-mp4",
+        "type": "single-mp4",
         "sources": {
-          "720p": "https://pub-66ab9d6fa4d24e1cbadbe0b3f79ffa0c.r2.dev/video/barbaad%20multiple%20mp4/Barbaad%20Song-720p.mp4",
-          "1080p": "https://pub-66ab9d6fa4d24e1cbadbe0b3f79ffa0c.r2.dev/video/barbaad%20multiple%20mp4/Barbaad%20Song%201080p.mp4",
-          "1440p": "https://pub-66ab9d6fa4d24e1cbadbe0b3f79ffa0c.r2.dev/video/barbaad%20multiple%20mp4/Barbaad%20Song%201440p.mp4",
-          "4K": "https://pub-66ab9d6fa4d24e1cbadbe0b3f79ffa0c.r2.dev/video/barbaad%20multiple%20mp4/Barbaad%20Song%202160p.mp4"
+          "Auto": "https://pub-66ab9d6fa4d24e1cbadbe0b3f79ffa0c.r2.dev/video/CGI%20Multi-pass%20By%20%20VFX%20VIBE/CG%20Multi-Pass%20Compositing%20Showreel.mp4"
         }
       },
-      "id": "proj_1784524947664",
-      "date": "2026-07-20",
-      "isHomeShowreel": false
-    },
-    {
-      "title": "Train Teaser 3",
-      "slug": "train-teaser-3",
-      "tags": [
-        "Environment Extension"
-      ],
-      "overview": "",
-      "thumbnail": "https://pub-66ab9d6fa4d24e1cbadbe0b3f79ffa0c.r2.dev/video/Train%20-%20Official%20Teaser/Train%20Official%20Teaser%20Cover.jpg",
-      "status": "published",
-      "featured": false,
-      "video": {
-        "type": "hls",
-        "sources": {
-          "Auto": "https://pub-66ab9d6fa4d24e1cbadbe0b3f79ffa0c.r2.dev/video/Train%20-%20Official%20Teaser/master.m3u8"
-        }
-      },
-      "id": "proj_1784625883070",
-      "date": "2026-07-21",
-      "isHomeShowreel": true
+      "id": "proj_1784792522008",
+      "date": "2026-07-23"
     }
   ]
 }
