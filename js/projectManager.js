@@ -138,7 +138,7 @@ class ProjectManager {
                 <div class="error-container">
                     <h2 class="error-title">${title}</h2>
                     <p class="error-text">${message}</p>
-                    <a href="works.html" class="publish-btn error-btn">Browse Portfolio</a>
+                    <a href="works" class="publish-btn error-btn">Browse Portfolio</a>
                 </div>
             `;
         }

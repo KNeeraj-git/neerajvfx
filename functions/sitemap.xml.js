@@ -17,7 +17,7 @@ export async function onRequestGet(context) {
         xml += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
 
         // 3. Add Static Pages (Home, Works, About)
-        const staticPages = ['', '/works.html', '/about.html'];
+        const staticPages = ['', '/works', '/about'];
         for (const page of staticPages) {
             xml += `  <url>\n`;
             xml += `    <loc>${baseUrl}${page}</loc>\n`;

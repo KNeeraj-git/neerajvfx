@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const linkPath = link.getAttribute("href");
         const currentPath = window.location.pathname.split("/").pop();
         
-        if (linkPath === currentPath || (window.location.pathname.endsWith("/") && linkPath === "index.html")) {
+        if (linkPath === currentPath || (window.location.pathname.endsWith("/") && linkPath === "/")) {
             link.classList.add("active");
         }
         link.addEventListener("click", () => navLinks.classList.remove("open"));
